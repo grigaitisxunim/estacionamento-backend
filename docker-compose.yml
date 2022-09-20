@@ -1,16 +1,22 @@
 # docker-compose.yml
 version: "3"
 services:
+  front:
+    build: ./client/
+    ports:
+      - "42001:3000"
+    command: npm start
+
   app:
     build: ./
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://user:pass@postgres:5432/db
+      DATABASE_URL: postgres://montduser:montd42@postgres:5432/omni_users
       NODE_ENV: development
       PORT: 3000
     ports:
-      - "3000:3000"
+      - "42002:3000"
     command: npm run dev
     volumes:
       - .:/app/
@@ -21,6 +27,6 @@ services:
     ports:
       - "35432:5432"
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: db
+      POSTGRES_USER: montduser
+      POSTGRES_PASSWORD: montd42
+      POSTGRES_DB: omni_users
