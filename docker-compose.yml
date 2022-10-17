@@ -1,11 +1,11 @@
 # docker-compose.yml
 version: "3"
 services:
-  front:
-    build: ./client/
-    ports:
-      - "42001:3000"
-    command: npm start
+#  front:
+#    build: ./auth-front/
+#    ports:
+#      - "42001:3000"
+#    command: npm start
 
   app:
     build: ./
@@ -30,3 +30,5 @@ services:
       POSTGRES_USER: montduser
       POSTGRES_PASSWORD: montd42
       POSTGRES_DB: omni_users
+    volumes: 
+      - ./omni_users.sql:/docker-entrypoint-initdb.d/omni_users.sql

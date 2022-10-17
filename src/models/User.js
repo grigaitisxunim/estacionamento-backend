@@ -13,7 +13,7 @@ class User extends Sequelize.Model {
         last_login: Sequelize.DATE,
         password_hash: Sequelize.STRING,
         register_date: Sequelize.DATE,
-        level: Sequelize.INTEGER
+        user_type_id: Sequelize.INTEGER,
       },
       { sequelize }
     );
@@ -32,16 +32,16 @@ class User extends Sequelize.Model {
       as: "user_type",
     });
     this.belongsTo(models.Company, {
-        foreignKey: "company_id",
-        as: "company",
-      });
+      foreignKey: "company_id",
+      as: "company",
+    });
   }
 
   checkPassword(password) {
     return bcrypt.compare(password, this.password_hash);
   }
 
-  async generateToken(expiresIn) {
+  async generateToken(expiresIn = "1d") {
     const token = jwt.sign(
       {
         id: this.id,
@@ -49,7 +49,7 @@ class User extends Sequelize.Model {
         user_type_id: this.user_type_id,
         level: this.level,
       },
-      process.app_config.jwt_pass,
+      process.env.jwt_secret,
       { expiresIn }
     );
 

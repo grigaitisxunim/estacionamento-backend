@@ -24,7 +24,7 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
         allowNull: false,
       },
       last_login: {
@@ -41,11 +41,6 @@ module.exports = {
         allowNull: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
-      },
-      level: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
       },
       created_at: {
         type: Sequelize.DATE,

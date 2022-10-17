@@ -1,3 +1,7 @@
 node_modules
 .env
+<<<<<<< HEAD
 .gitlab-ci.yml
+=======
+.gitlab-ci.yml
+>>>>>>> 7799766d43bbacb9daf9b66c9ecffdc12f7c8c0c
