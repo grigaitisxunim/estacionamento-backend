@@ -1,11 +1,11 @@
 const express = require("express");
 const routes = express.Router();
 const Usuario = require("./controllers/usuarios.controller");
-<<<<<<< HEAD
+
 const Admin = require("./controllers/usuarioAdmin.controller");
-=======
+
 const Index = require("./database/index");
->>>>>>> 7799766d43bbacb9daf9b66c9ecffdc12f7c8c0c
+
 
 routes.post("/api/usuarios", Usuario.create);
 
