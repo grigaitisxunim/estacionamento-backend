@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const jwt = require("jsonwe/btoken");
+const jwt = require("jsonwebtoken");
 const secret = process.env.jwt_secret;
 
 module.exports = {

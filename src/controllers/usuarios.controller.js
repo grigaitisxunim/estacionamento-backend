@@ -14,7 +14,7 @@ module.exports = {
       const { email, company_name } = req.body;
       let user = await User.findOne({ where: { email } });
       if (user) {
-        res.status.json();
+        res.status(500).json({ erro: "Esse email já está sendo usado!" });
       }
       let company = await Company.findOne({ where: { name: company_name } });
 

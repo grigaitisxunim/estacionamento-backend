@@ -12,7 +12,7 @@ app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 app.get("/", function (req, res) {
-  res.json({ message: "Hello Word" });
+  res.json({ message: "Auth API MontData" });
 });
 
 app.use(routes);

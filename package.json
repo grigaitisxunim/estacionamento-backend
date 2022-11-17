@@ -6,13 +6,8 @@
   "scripts": {
     "client": "npm start --prefix auth-front",
     "server": "nodemon server.js",
-<<<<<<< HEAD
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "wdb": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all && npm run dev",
-=======
     "dev": "npm run server",
     "wdb": "cmd /c npx sequelize db:migrate:undo:all & npx sequelize db:migrate & npx sequelize db:seed:all & npm run dev",
->>>>>>> 7799766d43bbacb9daf9b66c9ecffdc12f7c8c0c
     "db": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
