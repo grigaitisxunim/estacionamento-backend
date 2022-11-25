@@ -74,12 +74,17 @@ module.exports = {
   async login(req, res) {
     const { email, password } = req.body;
     const user = await User.findOne({ where: { email, active: true } });
-    if (!user) return res.status(500).json({ error: "Usuário incorreto!" });
+    if (!user)
+      return res.status(500).json({ error: "Usuário ou senha incorretos!" });
     if (!(await user.checkPassword(password))) {
       return res.status(500).json({ error: "Usuario ou senha incorretos!" });
     }
     const token = await user.generateToken();
-    return res.json({ token });
+    const org = await User.findOne({ where: { email } });
+    var id = org.company_id;
+    //console.log(orgId);
+    const orgName = await Company.findOne({ where: { id } });
+    return res.json({ token, orgName });
   },
   async health(req, res) {
     const health = await Index.init();
