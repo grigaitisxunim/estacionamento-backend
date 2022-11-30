@@ -7,6 +7,7 @@ class Company extends Sequelize.Model {
     super.init(
       {
         name: Sequelize.STRING,
+        truedesk_id: Sequelize.STRING,
       },
       { sequelize }
     );
@@ -18,10 +19,8 @@ class Company extends Sequelize.Model {
       foreignKey: "user_id",
       as: "user",
     });
-    this.hasMany(models.User, {as: "users"});
+    this.hasMany(models.User, { as: "users" });
   }
-
-  
 }
 
 module.exports = Company;

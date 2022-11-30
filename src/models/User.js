@@ -14,6 +14,7 @@ class User extends Sequelize.Model {
         password_hash: Sequelize.STRING,
         register_date: Sequelize.DATE,
         user_type_id: Sequelize.INTEGER,
+        truedesk_id: Sequelize.STRING,
       },
       { sequelize }
     );

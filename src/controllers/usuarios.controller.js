@@ -63,9 +63,9 @@ module.exports = {
     return res.json(user);
   },
   async update(req, res) {
-    const { id, full_name, email, active } = req.body;
+    const { id, full_name, email, active, truedesk_id } = req.body;
     const user = await User.findByPk(id);
-    await user.update({ full_name, email, active });
+    await user.update({ full_name, email, active, truedesk_id });
     if (!user) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }

@@ -30,6 +30,11 @@ module.exports = {
         defaultValue: new Date(),
         allowNull: false,
       },
+      truedesk_id: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: true,
+      },
     });
   },
 
