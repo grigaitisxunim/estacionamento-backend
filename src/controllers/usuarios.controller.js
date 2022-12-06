@@ -28,6 +28,7 @@ module.exports = {
         delete req.body.company_name;
         user = await User.create({ ...req.body, company_id: company.id });
         delete user.dataValues.password;
+        delete user.dataValues.password_hash;
 
         if (company_created) {
           await company.update({ user_id: user.id });
@@ -35,7 +36,7 @@ module.exports = {
 
         return res
           .status(company_created ? 201 : 200)
-          .json(user, req.body.company_name);
+          .json({ ...user.dataValues, company_name: company.name });
       } else {
         return res
           .status(500)
