@@ -8,6 +8,6 @@ module.exports = {
     if (!company) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }
-    return res.json(req.body);
+    return res.status(200).json(company.truedesk_id);
   },
 };

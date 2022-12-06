@@ -32,7 +32,10 @@ module.exports = {
         if (company_created) {
           await company.update({ user_id: user.id });
         }
-        return res.status(200).json(user);
+
+        return res
+          .status(company_created ? 201 : 200)
+          .json(user, req.body.company_name);
       } else {
         return res
           .status(500)
@@ -84,7 +87,7 @@ module.exports = {
     var id = org.company_id;
     //console.log(orgId);
     const orgName = await Company.findOne({ where: { id } });
-    return res.json({ token, orgName });
+    return res.json({ token, orgName, truedesk_id });
   },
   async health(req, res) {
     const health = await Index.init();
