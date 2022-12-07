@@ -11,10 +11,13 @@ module.exports = {
   },
   async create(req, res) {
     try {
-      const { email, company_name } = req.body;
+      const { email, username, company_name } = req.body;
       let user = await User.findOne({ where: { email } });
-      if (user) {
-        res.status(500).json({ erro: "Esse email já está sendo usado!" });
+      let usern = await User.findOne({ where: { username } });
+      if (user || usern) {
+        res
+          .status(500)
+          .json({ erro: "Esse email ou nome de usuário já está sendo usado!" });
       }
       let company = await Company.findOne({ where: { name: company_name } });
 
@@ -24,7 +27,7 @@ module.exports = {
         company = await Company.create({ name: company_name });
         company_created = true;
       }
-      if (!user) {
+      if (!user || !usern) {
         delete req.body.company_name;
         user = await User.create({ ...req.body, company_id: company.id });
         delete user.dataValues.password;
@@ -34,9 +37,11 @@ module.exports = {
           await company.update({ user_id: user.id });
         }
 
-        return res
-          .status(company_created ? 201 : 200)
-          .json({ ...user.dataValues, company_name: company.name });
+        return res.status(company_created ? 201 : 200).json({
+          ...user.dataValues,
+          company_name: company.name,
+          truedesk_company_id: company.truedesk_id,
+        });
       } else {
         return res
           .status(500)
@@ -76,19 +81,19 @@ module.exports = {
     return res.json(req.body);
   },
   async login(req, res) {
-    const { email, password } = req.body;
-    const user = await User.findOne({ where: { email, active: true } });
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username, active: true } });
     if (!user)
       return res.status(500).json({ error: "Usuário ou senha incorretos!" });
     if (!(await user.checkPassword(password))) {
       return res.status(500).json({ error: "Usuario ou senha incorretos!" });
     }
     const token = await user.generateToken();
-    const org = await User.findOne({ where: { email } });
+    const org = await User.findOne({ where: { username } });
     var id = org.company_id;
     //console.log(orgId);
     const orgName = await Company.findOne({ where: { id } });
-    return res.json({ token, orgName, truedesk_id });
+    return res.json({ token, orgName, truedesk_id: org.truedesk_id });
   },
   async health(req, res) {
     const health = await Index.init();
