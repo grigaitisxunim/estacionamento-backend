@@ -78,7 +78,7 @@ module.exports = {
     if (!user) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }
-    return res.json(req.body);
+    return res.json(user);
   },
   async login(req, res) {
     const { username, password } = req.body;

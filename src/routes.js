@@ -11,7 +11,7 @@ routes.post("/api/usuarios", Usuario.create);
 routes.post("/api/usuarios/login", Usuario.login);
 routes.get("/api/usuarios.details/:id", Usuario.details);
 
-routes.put("/api/usuarios", Usuario.update);
+routes.put("/api/usuarios/update", Usuario.update);
 routes.delete("/api/usuarios/:id", Usuario.delete);
 routes.put("/api/company/update", Company.update);
 
