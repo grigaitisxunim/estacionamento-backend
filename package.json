@@ -7,7 +7,7 @@
     "client": "npm start --prefix auth-front",
     "server": "nodemon server.js",
     "dev": "npm run server",
-    "wdb": "cmd /c npx sequelize db:migrate:undo:all & npx sequelize db:migrate & npx sequelize db:seed:all & npm run dev",
+    "wdb": "npx sequelize db:create && npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all",
     "db": "npx sequelize db:migrate:undo:all && npx sequelize db:migrate && npx sequelize db:seed:all && npm run dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
