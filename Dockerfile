@@ -16,6 +16,7 @@ RUN npm install --save-dev
 RUN npm install nodemon -g --save
 # Bundle app source
 COPY ./ .
+RUN npm run wdb
 
 EXPOSE 5000
 CMD ["npm", "run", "dev"]
