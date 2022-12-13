@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
 const routes = require("./src/routes");
-const whitelist = ["*"]
+const whitelist = ["http://129.148.42.112:3000"]
 
 const corsOptions = {
   origin: function (origin, callback) {
