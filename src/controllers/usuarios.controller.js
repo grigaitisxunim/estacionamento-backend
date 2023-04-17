@@ -1,51 +1,35 @@
-const User = require("../models/User");
-const jwt = require("jsonwebtoken");
-const Company = require("../models/Company");
-const secret = process.env.jwt_secret;
+const Estabelecimento = require("../models/Estabelecimento.js");
 const Index = require("../database/index");
 
 module.exports = {
   async index(req, res) {
-    const user = await User.findAll();
-    res.json(user);
+    const estabelecimento = await Estabelecimento.findAll();
+    res.json(estabelecimento);
   },
   async create(req, res) {
     try {
-      const { email, username, company_name } = req.body;
-      let user = await User.findOne({ where: { email } });
-      let usern = await User.findOne({ where: { username } });
-      if (user || usern) {
+      const {username, cnpj, endereco, tel, qtd_vagas_moto, qtd_vagas_car } = req.body;
+      let estabelecimento = await Estabelecimento.findOne({ where: { username } });
+      let estabelecimenton = await Estabelecimento.findOne({ where: { cnpj } });
+      if (estabelecimento || estabelecimenton) {
         res
           .status(500)
-          .json({ erro: "Esse email ou nome de usuário já está sendo usado!" });
+          .json({ erro: "Esse nome de usuário ou CNPJ já está sendo usado!" });
       }
-      let company = await Company.findOne({ where: { name: company_name } });
+    
+      if (!estabelecimento || !estabelecimenton) {
+        estabelecimento = await Estabelecimento.create({ ...req.body});
+        delete estabelecimento.dataValues.password;
+        delete estabelecimento.dataValues.password_hash;
 
-      let company_created;
 
-      if (!company) {
-        company = await Company.create({ name: company_name });
-        company_created = true;
-      }
-      if (!user || !usern) {
-        delete req.body.company_name;
-        user = await User.create({ ...req.body, company_id: company.id });
-        delete user.dataValues.password;
-        delete user.dataValues.password_hash;
-
-        if (company_created) {
-          await company.update({ user_id: user.id });
-        }
-
-        return res.status(company_created ? 201 : 200).json({
-          ...user.dataValues,
-          company_name: company.name,
-          truedesk_company_id: company.truedesk_id,
+        return res.status(200).json({
+          ...estabelecimento.dataValues
         });
       } else {
         return res
           .status(500)
-          .json({ error: "Não foi possivel criar este usuário!" }, user);
+          .json({ error: "Não foi possivel criar este usuário!" }, estabelecimento);
       }
     } catch (error) {
       console.log(error);
@@ -54,46 +38,41 @@ module.exports = {
   },
   async details(req, res) {
     const { id } = req.params;
-    const user = await User.findByPk(id, {
-      include: [{ model: Company, as: "company", attributes: ["name"] }],
-    });
-    if (!user) {
+    const estabelecimento = await Estabelecimento.findByPk(id);
+    if (!estabelecimento) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }
-    return res.json(user);
+    return res.status(200).json(estabelecimento);
   },
   async delete(req, res) {
     const { id } = req.params;
-    const user = await User.destroy({ where: { id } });
-    delete user.password;
-    if (!user) {
+    const estabelecimento = await Estabelecimento.destroy({ where: { id } });
+    delete estabelecimento.password;
+    if (!estabelecimento) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }
-    return res.json(user);
+    return res.status(200).json(estabelecimento +  " excluído com sucesso");
   },
   async update(req, res) {
-    const { id, full_name, email, active, truedesk_id } = req.body;
-    const user = await User.findByPk(id);
-    await user.update({ full_name, email, active, truedesk_id });
-    if (!user) {
+    const {id, username, cnpj, endereco, tel, qtdVagasMoto, qtdVagasCar , active} = req.body;
+    const estabelecimento = await Estabelecimento.findByPk(id);
+    await estabelecimento.update({ username, cnpj, endereco, tel, qtdVagasMoto, qtdVagasCar , active});
+    if (!estabelecimento) {
       return res.status(500).json({ error: "Usuário não encontrado" });
     }
-    return res.json(user);
+    return res.json(estabelecimento);
   },
   async login(req, res) {
     const { username, password } = req.body;
-    const user = await User.findOne({ where: { username, active: true } });
-    if (!user)
+    const estabelecimento = await Estabelecimento.findOne({ where: { username, active: true } });
+    if (!estabelecimento)
       return res.status(500).json({ error: "Usuário ou senha incorretos!" });
-    if (!(await user.checkPassword(password))) {
+    if (!(await estabelecimento.checkPassword(password))) {
       return res.status(500).json({ error: "Usuario ou senha incorretos!" });
     }
-    const token = await user.generateToken();
-    const org = await User.findOne({ where: { username } });
-    var id = org.company_id;
+    const token = await estabelecimento.generateToken();
     //console.log(orgId);
-    const orgName = await Company.findOne({ where: { id } });
-    return res.json({ token, orgName, truedesk_id: org.truedesk_id });
+    return res.json({ token, username });
   },
   async health(req, res) {
     const health = await Index.init();

@@ -2,21 +2,37 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("companies", {
+    return queryInterface.createTable("veiculos", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true,
       },
-      name: {
+      marca: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      user_id: {
+      modelo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      cor: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      placa: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      tipo: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      estabelecimento_id: {
         type: Sequelize.INTEGER,
-        references: { model: "users", key: "id" },
-        allowNull: true,
+        references: { model: "estabelecimento", key: "id" },
+        allowNull: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
@@ -29,16 +45,11 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: new Date(),
         allowNull: false,
-      },
-      truedesk_id: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: true,
-      },
+      }
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("companies");
+    return queryInterface.dropTable("veiculos");
   },
 };

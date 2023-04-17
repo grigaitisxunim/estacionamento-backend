@@ -2,7 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("users", {
+    return queryInterface.createTable("estabelecimento", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -14,11 +14,26 @@ module.exports = {
         unique: true,
         allowNull: false,
       },
-      full_name: {
+      cnpj: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
+      endereco: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      tel: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      qtd_vagas_moto: {
+        type: Sequelize.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      qtd_vagas_car: {
         type: Sequelize.STRING,
         unique: true,
         allowNull: false,
@@ -56,16 +71,11 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: new Date(),
         allowNull: false,
-      },
-      truedesk_id: {
-        type: Sequelize.STRING,
-        unique: true,
-        allowNull: true,
-      },
+      }
     });
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("users");
+    return queryInterface.dropTable("estabelecimentos");
   },
 };

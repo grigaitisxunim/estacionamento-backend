@@ -12,7 +12,8 @@ services:
     depends_on:
       - postgres
     environment:
-      DATABASE_URL: postgres://montduser:montd42@postgres:5432/omni_users
+      DATABASE_URL: postgres:/
+      
       NODE_ENV: development
       PORT: 3000
     ports:
@@ -27,8 +28,8 @@ services:
     ports:
       - "35432:5432"
     environment:
-      POSTGRES_USER: montduser
-      POSTGRES_PASSWORD: montd42
-      POSTGRES_DB: omni_users
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: estacionamento
     volumes: 
-      - ./omni_users.sql:/docker-entrypoint-initdb.d/omni_users.sql
+      - ./estacionamento.sql:/docker-entrypoint-initdb.d/estacionamento.sql
