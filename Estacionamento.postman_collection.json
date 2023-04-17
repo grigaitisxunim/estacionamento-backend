@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "aaa0203e-00d3-4336-bce2-c160813118b7",
+		"name": "Estacionamento",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Estabelecimento",
+			"item": [
+				{
+					"name": "Cadastro Estabelecimento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"username\": \"empresa teste\",\r\n        \"cnpj\": \"33.333.333/0001-55\",\r\n        \"endereco\": \"Rua Santo Ubaldo, 13\",\r\n        \"tel\": \"11956743771\",\r\n        \"qtd_vagas_moto\": \"50\",\r\n        \"qtd_vagas_car\": \"650\",\r\n        \"password\": \"1234\",\r\n        \"user_type_id\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"empresa teste\",\r\n    \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento/login"
+					},
+					"response": []
+				},
+				{
+					"name": "Estabelecimento Details",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento.details/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Estabelecimento Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"1\",\r\n    \"username\": \"Alteração no nome\",\r\n    \"cnpj\": \"33.333.333/0001-55\",\r\n    \"endereco\": \"Rua Santo Ubaldo, 13\",\r\n    \"tel\": \"11956743771\",\r\n    \"qtd_vagas_moto\": \"51\",\r\n    \"qtd_vagas_car\": \"500\",\r\n    \"active\": \"true\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento/update"
+					},
+					"response": []
+				},
+				{
+					"name": "Estabelecimento Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": "{{URL}}/api/estabelecimento/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Veiculo",
+			"item": [
+				{
+					"name": "Cadastro Veiculo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"placa\": \"PZT-3276\",\r\n        \"marca\": \"Fiat\",\r\n        \"modelo\": \"Uno\",\r\n        \"cor\": \"Cinza\",\r\n        \"tipo\": \"Passeio\",\r\n        \"estabelecimento_id\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento/veiculo"
+					},
+					"response": []
+				},
+				{
+					"name": "Veiculos.details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{URL}}/api/estabelecimento/veiculos.details/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Veiculos Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"1\",\r\n        \"placa\": \"PZT-3276\",\r\n        \"marca\": \"Chevrolet\",\r\n        \"modelo\": \"Corsa\",\r\n        \"cor\": \"Cinza\",\r\n        \"tipo\": \"Passeio\",\r\n        \"estabelecimento_id\": \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento/veiculos/update"
+					},
+					"response": []
+				},
+				{
+					"name": "Veiculos Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/estabelecimento/veiculos/2"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "http://localhost:5000",
+			"type": "default"
+		}
+	]
+}
